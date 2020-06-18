@@ -41,7 +41,7 @@ if platform.system() == 'Windows':
     libname = 'libopenslide-0.dll'
     try:
         _lib = cdll.LoadLibrary(libname)
-    except:
+    except OSError:
         import ctypes.util
         _lib = ctypes.util.find_library(libname)
         if not _lib:
