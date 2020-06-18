@@ -38,7 +38,15 @@ import platform
 import sys
 
 if platform.system() == 'Windows':
-    _lib = cdll.LoadLibrary('libopenslide-0.dll')
+    libname = 'libopenslide-0.dll'
+    try:
+        _lib = cdll.LoadLibrary(libname)
+    except:
+        import ctypes.util
+        _lib = ctypes.util.find_library(libname)
+        if not _lib:
+            raise
+        _lib = cdll.LoadLibrary(_lib)
 elif platform.system() == 'Darwin':
     try:
         _lib = cdll.LoadLibrary('libopenslide.0.dylib')
